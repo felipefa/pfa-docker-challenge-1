@@ -1,0 +1,19 @@
+FROM node:lts
+
+ENV PORT=3000
+ENV MYSQL_HOST=pfa-docker-1-mysql
+ENV MYSQL_DATABASE=pfa_docker_1
+ENV MYSQL_ROOT_USER=root
+ENV MYSQL_ROOT_PASSWORD=root
+
+WORKDIR /usr/src/app
+RUN chown -R node /usr/src/app
+
+COPY package.json yarn.lock ./
+RUN yarn
+RUN npm install -g nodemon
+
+USER node
+EXPOSE 3000
+
+CMD [ "yarn", "dev" ]
